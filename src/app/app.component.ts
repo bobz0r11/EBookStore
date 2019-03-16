@@ -8,10 +8,4 @@ import { BusinessService } from 'src/business.service';
 })
 export class AppComponent {
 
-  constructor(private businessService: BusinessService) { }
-
-  addBusiness(person_name, busines_name, business_gst_number) {
-    this.businessService.addBusiness(person_name, busines_name, business_gst_number);
-  }
-
 }

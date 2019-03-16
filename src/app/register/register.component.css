@@ -1,0 +1,40 @@
+input {
+  border-radius: 5px;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 3px;
+  margin-right: 3px;
+  z-index: 1;
+}
+
+button {
+  border-width: 4px;
+  border-color: cornflowerblue;
+  width: 10%;
+  height: 30%;
+  font-family: "Lilita One", cursive;
+  border-style: outset;
+  display: inline-block;
+  position: relative;
+  left: 99px;
+}
+
+
+
+#registerForm {
+  border-style: solid;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 50%;
+  height: 50%;
+  padding: 10px;
+  margin-top: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  background-color: ghostwhite;
+  animation: fadein 1s ease-in;
+  z-index: 1;
+  box-shadow: 5px 5px 5px 5px gray;
+}

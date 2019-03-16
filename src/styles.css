@@ -1,7 +1,33 @@
 body,
 html {
   height: 100%;
+  width: 100%;
   overflow: hidden;
+}
+
+.backgroundImg {
+  background-image: url(E:\angular2\EBookStore\img\poza2.gif);
+  color: red;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+  position: absolute;
+}
+
+.bodyOverlay {
+  opacity: 0.1;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-image: repeating-linear-gradient(210deg, #ccc, #ccc 30px, #000000 30px, #000000 60px);
+  min-height: 10px;
 }
 
 html,
