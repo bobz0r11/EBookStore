@@ -1,40 +1,55 @@
-input {
+input,
+select {
   border-radius: 5px;
   font-family: Georgia, "Times New Roman", Times, serif;
-  width: 90%;
-  margin-left: 5%;
-  margin-bottom: 3px;
-  margin-right: 3px;
+  width: 100%;
   z-index: 1;
+  margin: 10px auto;
 }
 
 button {
   border-width: 4px;
-  border-color: cornflowerblue;
-  width: 10%;
-  height: 30%;
+  border-color: gray;
+  background-color: steelblue;
+  border-radius: 10px;
+  width: 25%;
+  height: 100%;
   font-family: "Lilita One", cursive;
   border-style: outset;
-  display: inline-block;
-  position: relative;
-  left: 99px;
+  color: white;
 }
 
+span{
+  font-family: "Lilita One", cursive;
+}
 
+button:hover{
+  background-color: gray;
+}
 
 #registerForm {
+  display: grid;
   border-style: solid;
   border-radius: 10px;
   margin: 0 auto;
-  width: 50%;
+  width: 40%;
   height: 50%;
+  margin-top: 12%;
   padding: 10px;
-  margin-top: 300px;
   padding: 10px;
   border-radius: 10px;
   position: relative;
-  background-color: ghostwhite;
-  animation: fadein 1s ease-in;
+  background-color: whitesmoke;
+  animation: fadein 0.5s ease-in;
   z-index: 1;
   box-shadow: 5px 5px 5px 5px gray;
+}
+
+#btnBack {
+  position: relative;
+}
+
+#btnRegister {
+  position: relative;
+  float: right;
 }

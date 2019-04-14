@@ -1,19 +1,17 @@
 @import url("https://fonts.googleapis.com/css?family=Lilita+One|Quicksand|Source+Code+Pro");
 
-
-
 #loginForm {
   border-style: solid;
   border-radius: 10px;
   margin: 0 auto;
   width: 20%;
   padding: 10px;
-  margin-top: 300px;
+  margin-top: 17%;
   padding: 10px;
   border-radius: 10px;
   position: relative;
   background-color: ghostwhite;
-  animation: fadein 1s ease-in;
+  animation: fadein 0.5s ease-in;
   z-index: 1;
   box-shadow: 5px 5px 5px 5px gray;
 }
@@ -34,14 +32,14 @@ input {
 }
 
 button {
-  border-style: inset;
   border-width: 4px;
-  border-color: cornflowerblue;
+  border-radius: 10px;
   width: 60%;
   margin-left: 20%;
   margin-right: 20%;
   font-family: "Lilita One", cursive;
   border-style: outset;
+  background-color: steelblue;
 }
 
 @keyframes fadein {

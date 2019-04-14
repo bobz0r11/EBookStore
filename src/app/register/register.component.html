@@ -3,26 +3,36 @@
   </div>
 </div>
 
-<div id="registerForm">
-  <div class="container">
-    <small>E-mail:</small>
-    <input type="text" class="form-control">
-    <small>Password:</small>
-    <input type="password" class="form-control">
-    <small>Address</small>
-    <input type="text" class="form-control">
-    <small>Phone number</small>
-    <input type="text" class="form-control">
-    <div class="form-group">
-      <button type="button" class="btn btn-secondary btn-sm" name="back">Back</button>
-      <button type="submit" class="btn btn-secondary btn-sm" name="submit">Submit</button>
-    </div>
 
-    <!-- <div class="input-group input-group-sm mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+<div class="container">
+  <div id="registerForm">
+    <form [formGroup]="registerFormChild">
+      <div class="form-group">
+        <span>Please complete the form in order to register:</span>
+        <input type="text" class="form-control" placeholder="Enter email" formControlName="email">
       </div>
-      <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-    </div>
-  </div> -->
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Address" formControlName="address">
+      </div>
+      <div class="form-group">
+        <select class="form-control" formControlName="state">
+          <option selected>Choose State</option>
+          <option *ngFor="let state of stateList">{{state.name}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Zip Code" formControlName="zipcode">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+      </div>
+      <a routerLink="/login"><button class="btn" id="btnLogin">Back</button></a>
+      <a routerLink="/"><button class="btn" id="btnRegister"
+          (click)="addUser(registerFormChild.value.email, registerFormChild.value.password, 
+          registerFormChild.value.address, registerFormChild.value.state, registerFormChild.value.zipcode, registerFormChild.value.phoneNumber)">Register</button></a>
+    </form>
+  </div>
 </div>
