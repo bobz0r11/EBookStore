@@ -9,13 +9,25 @@
     <form [formGroup]="registerFormChild">
       <div class="form-group">
         <span>Please complete the form in order to register:</span>
-        <input type="text" class="form-control" placeholder="Enter email" formControlName="email">
+        <input type="text" class="form-control" placeholder="Email" formControlName="email" pattern="^(.+)@(.+).(.+)$"
+          [ngClass]="{ 'is-invalid': (f.email.dirty || f.email.touched) && f.email.errors }">
+        <div *ngIf="f.email.errors || (f.email.dirty || f.email.touched)" class="invalid-feedback">
+          <div>Email is required</div>
+        </div>
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+        <input type="password" class="form-control" placeholder="Password" formControlName="password"
+          [ngClass]="{ 'is-invalid': (f.password.dirty || f.password.touched) && f.password.errors }">
+        <div *ngIf="(f.password.dirty || f.password.touched) && f.password.errors" class="invalid-feedback">
+          <div>Password must contain minimum 4 characters</div>
+        </div>
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Address" formControlName="address">
+        <input type="text" class="form-control" placeholder="Address" formControlName="address"
+          [ngClass]="{ 'is-invalid': (f.address.dirty || f.address.touched) && f.address.errors }">
+        <div *ngIf="(f.address.dirty || f.address.touched) && f.address.errors" class="invalid-feedback">
+          <div>Please enter address</div>
+        </div>
       </div>
       <div class="form-group">
         <select class="form-control" formControlName="state">
@@ -24,15 +36,25 @@
         </select>
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Zip Code" formControlName="zipcode">
+        <input type="text" class="form-control" placeholder="Zip Code" formControlName="zipcode"
+          [ngClass]="{ 'is-invalid': (f.zipcode.dirty || f.zipcode.touched) && f.zipcode.errors }">
+        <div *ngIf="(f.zipcode.dirty || f.zipcode.touched) && f.zipcode.errors" class="invalid-feedback">
+          <div>Please enter a valid zipcode</div>
+        </div>
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber">
+        <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber"
+          (keypress)="isNumberKey($event)"
+          [ngClass]="{ 'is-invalid': (f.phoneNumber.dirty || f.phoneNumber.touched) && f.phoneNumber.errors }">
+        <div *ngIf="(f.phoneNumber.dirty || f.phoneNumber.touched) && f.phoneNumber.errors" class="invalid-feedback">
+          <div>Please enter a valid phone number</div>
+        </div>
       </div>
       <a routerLink="/login"><button class="btn" id="btnLogin">Back</button></a>
       <a routerLink="/"><button class="btn" id="btnRegister"
           (click)="addUser(registerFormChild.value.email, registerFormChild.value.password, 
-          registerFormChild.value.address, registerFormChild.value.state, registerFormChild.value.zipcode, registerFormChild.value.phoneNumber)">Register</button></a>
+          registerFormChild.value.address, registerFormChild.value.state, registerFormChild.value.zipcode, registerFormChild.value.phoneNumber)"
+          (click)="emitRegisterEvent($event)" [disabled]="!registerFormChild.valid">Register</button></a>
     </form>
   </div>
 </div>

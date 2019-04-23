@@ -52,3 +52,20 @@ button {
     transform: translateY(0);
   }
 }
+
+.infoPopup{
+  position: absolute;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 40%;
+  height: 50%;
+  margin-top: 12%;
+  padding: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 2;
+  background-color: whitesmoke;
+  animation: fadein 0.5s ease-in;
+  box-shadow: 5px 5px 5px 5px gray;
+  word-wrap: break-word;
+}

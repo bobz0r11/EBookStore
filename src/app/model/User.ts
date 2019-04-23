@@ -7,4 +7,5 @@ export class User {
     state: State;
     zipCode: number;
     phoneNumber: number;
+    token?: string;
 }

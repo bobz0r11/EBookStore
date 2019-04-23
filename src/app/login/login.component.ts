@@ -10,6 +10,7 @@ import { Routes } from '@angular/router';
 export class LoginComponent {
 
   route: Routes;
+  registered: boolean = true;
 
   constructor() {
 

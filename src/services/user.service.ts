@@ -23,8 +23,6 @@ export class UserService {
       phoneNumber: phoneNumber
     };
 
-    console.log(user);
-    console.log("${this.appURL}");
 
     this.http.post(`${this.appURI}/adduser`, user)
       .subscribe(res => console.log('Added user to db'));
