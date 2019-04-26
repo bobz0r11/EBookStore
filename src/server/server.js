@@ -3,7 +3,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   cors = require('cors'),
   mongoose = require('mongoose'),
-  config = require('./config/DB'),
+  config = require('../config/DB'),
   os = require('os');
 
 var ip = require('ip')

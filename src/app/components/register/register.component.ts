@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { State } from '../model/State';
-import { UserService } from 'src/services/user.service';
+import { State } from '../../model/State';
+import { UserService } from 'src/service/user.service';
 import { WORLD_STATES_LIST } from 'src/config/constants';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 
