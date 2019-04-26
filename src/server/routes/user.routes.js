@@ -11,7 +11,7 @@ userRoutes.route('/adduser').post((req, res) => {
     console.log(req.body);
     user.save()
         .then(user => {
-            res.status(200).json({ 'user': 'user added successfully: ' + user });
+            res.status(200).json({ 'user': 'user added successfully' });
         })
         .catch(err => {
             res.status(400).send("unable to save user to database");

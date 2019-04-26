@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { State } from '../../model/State';
-import { UserService } from 'src/service/user.service';
+import { RegisterService } from 'src/service/register.service';
 import { WORLD_STATES_LIST } from 'src/config/constants';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { User } from 'src/app/model/User';
 
 @Component({
   selector: 'app-register',
@@ -13,11 +14,15 @@ export class RegisterComponent {
 
   stateList: State[] = WORLD_STATES_LIST;
 
-  submitted = false;
   registerFormChild: FormGroup;
-  @Output() registered = new EventEmitter<boolean>();
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder) {
+  successfullyRegistered = false;
+  submitted = false;
+
+  constructor(
+    private registerService: RegisterService,
+    private formBuilder: FormBuilder,
+  ) {
     this.createForm();
   }
 
@@ -33,15 +38,23 @@ export class RegisterComponent {
   }
 
   addUser(email, password, address, state: State, zipcode, phoneNumber: number): void {
-    this.userService.addUser(email, password, address, state, zipcode, phoneNumber);
+    this.registerService.addUser(email, password, address, state, zipcode, phoneNumber).subscribe(
+      userData => {
+        if (userData) {
+          this.successfullyRegistered = true;
+          this.submitted = true;
+        }
+      }, error => {
+        if (error) {
+          this.successfullyRegistered = false;
+          this.submitted = true;
+        }
+      }
+    )
   }
 
   //getter for easier usage of form properties in template file
-  get f() { return this.registerFormChild.controls; }
-
-  emitRegisterEvent(event: any) {
-
-  }
+  get form() { return this.registerFormChild.controls; }
 
   isNumberKey(event): boolean {
     var charCode = (event.which) ? event.which : event.keyCode

@@ -3,29 +3,28 @@
   </div>
 </div>
 
-
 <div class="container">
-  <div id="registerForm">
+  <div id="registerForm" [style.display]="submitted? 'none' : 'block'">
     <form [formGroup]="registerFormChild">
       <div class="form-group">
         <span>Please complete the form in order to register:</span>
         <input type="text" class="form-control" placeholder="Email" formControlName="email" pattern="^(.+)@(.+).(.+)$"
-          [ngClass]="{ 'is-invalid': (f.email.dirty || f.email.touched) && f.email.errors }">
-        <div *ngIf="f.email.errors || (f.email.dirty || f.email.touched)" class="invalid-feedback">
+          [ngClass]="{ 'is-invalid': (form.email.dirty || form.email.touched) && form.email.errors }">
+        <div *ngIf="form.email.errors || (form.email.dirty || form.email.touched)" class="invalid-feedback">
           <div>Email is required</div>
         </div>
       </div>
       <div class="form-group">
         <input type="password" class="form-control" placeholder="Password" formControlName="password"
-          [ngClass]="{ 'is-invalid': (f.password.dirty || f.password.touched) && f.password.errors }">
-        <div *ngIf="(f.password.dirty || f.password.touched) && f.password.errors" class="invalid-feedback">
+          [ngClass]="{ 'is-invalid': (form.password.dirty || form.password.touched) && form.password.errors }">
+        <div *ngIf="(form.password.dirty || form.password.touched) && form.password.errors" class="invalid-feedback">
           <div>Password must contain minimum 4 characters</div>
         </div>
       </div>
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Address" formControlName="address"
-          [ngClass]="{ 'is-invalid': (f.address.dirty || f.address.touched) && f.address.errors }">
-        <div *ngIf="(f.address.dirty || f.address.touched) && f.address.errors" class="invalid-feedback">
+          [ngClass]="{ 'is-invalid': (form.address.dirty || form.address.touched) && form.address.errors }">
+        <div *ngIf="(form.address.dirty || form.address.touched) && form.address.errors" class="invalid-feedback">
           <div>Please enter address</div>
         </div>
       </div>
@@ -37,24 +36,41 @@
       </div>
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Zip Code" formControlName="zipcode"
-          [ngClass]="{ 'is-invalid': (f.zipcode.dirty || f.zipcode.touched) && f.zipcode.errors }">
-        <div *ngIf="(f.zipcode.dirty || f.zipcode.touched) && f.zipcode.errors" class="invalid-feedback">
+          [ngClass]="{ 'is-invalid': (form.zipcode.dirty || form.zipcode.touched) && form.zipcode.errors }">
+        <div *ngIf="(form.zipcode.dirty || form.zipcode.touched) && form.zipcode.errors" class="invalid-feedback">
           <div>Please enter a valid zipcode</div>
         </div>
       </div>
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Phone number" formControlName="phoneNumber"
           (keypress)="isNumberKey($event)"
-          [ngClass]="{ 'is-invalid': (f.phoneNumber.dirty || f.phoneNumber.touched) && f.phoneNumber.errors }">
-        <div *ngIf="(f.phoneNumber.dirty || f.phoneNumber.touched) && f.phoneNumber.errors" class="invalid-feedback">
+          [ngClass]="{ 'is-invalid': (form.phoneNumber.dirty || form.phoneNumber.touched) && form.phoneNumber.errors }">
+        <div *ngIf="(form.phoneNumber.dirty || form.phoneNumber.touched) && form.phoneNumber.errors"
+          class="invalid-feedback">
           <div>Please enter a valid phone number</div>
         </div>
       </div>
       <a routerLink="/login"><button class="btn" id="btnLogin">Back</button></a>
-      <a routerLink="/"><button class="btn" id="btnRegister"
-          (click)="addUser(registerFormChild.value.email, registerFormChild.value.password, 
+      <button class="btn" id="btnRegister"
+        (click)="addUser(registerFormChild.value.email, registerFormChild.value.password, 
           registerFormChild.value.address, registerFormChild.value.state, registerFormChild.value.zipcode, registerFormChild.value.phoneNumber)"
-          (click)="emitRegisterEvent($event)" [disabled]="!registerFormChild.valid">Register</button></a>
+        [disabled]="!registerFormChild.valid">Register</button>
     </form>
   </div>
 </div>
+
+<ng-template [ngIf]="submitted">
+  <div class="container">
+    <div class="alert alert-info successfullRegister" *ngIf="successfullyRegistered">
+      You have been successfully registered.
+      <br>
+      <a routerLink="/login"><button class="btn" id="btnLogin">Back</button></a>
+    </div>
+    <div class="alert alert-danger failedRegister" *ngIf="!successfullyRegistered">
+      Registration has failed, please try again.
+      <br>
+      <a routerLink="/login"><button class="btn" id="btnLogin">Back</button></a>
+    </div>
+
+  </div>
+</ng-template>

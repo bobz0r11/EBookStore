@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { State } from 'src/app/model/State';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class RegisterService {
 
   appURI = "http://localhost:4000/register";
 
   constructor(private http: HttpClient) {
-
   }
 
-  addUser(email, password, address, state: State, zipcode, phoneNumber: number): void {
+  /**
+   * Adds new user to the database (register form)
+   */
+  addUser(email, password, address, state: State, zipcode, phoneNumber: number): Observable<any> {
     const user = {
       email: email,
       password: password,
@@ -22,10 +25,7 @@ export class UserService {
       zipcode: zipcode,
       phoneNumber: phoneNumber
     };
-
-
-    this.http.post(`${this.appURI}/adduser`, user)
-      .subscribe(res => console.log('Added user to db'));
+    return this.http.post(`${this.appURI}/adduser`, user);
   }
 
 }
