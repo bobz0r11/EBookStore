@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { State } from '../../model/State';
-import { RegisterService } from 'src/service/register.service';
-import { WORLD_STATES_LIST } from 'src/config/constants';
+import { RegisterService } from 'src/app/service/register.service';
+import { WORLD_STATES_LIST } from 'src/app/config/constants';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/model/User';
 

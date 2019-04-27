@@ -9,12 +9,17 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
+import { HomeComponent } from './components/home/home.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { authenticationProvider } from './interceptor/authentication.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
+    HomeComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +30,7 @@ import { MaterialModule } from './material.module';
     ReactiveFormsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [authenticationProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,12 +3,12 @@
   </div>
 </div>
 <div id="loginForm">
-  <form class="form-group">
-    <input type="text" class="form-control" placeholder="E-Mail">
+  <form class="form-group" [formGroup]="loginForm">
+    <input type="text" class="form-control" placeholder="E-Mail" formControlName="username">
     <br>
-    <input type="password" class="form-control" placeholder="Password">
+    <input type="password" class="form-control" placeholder="Password" formControlName="password">
     <br>
-    <button type="submit" class="btn btn-secondary btn-sm">Log In</button>
+    <button type="submit" class="btn btn-secondary btn-sm" (click)="login(loginForm.value.username, loginForm.value.password)">Log In</button>
     <br>
     <small>Don't have an account?
       <a routerLink="/register" routerLinkActive="active">Register now</a>
