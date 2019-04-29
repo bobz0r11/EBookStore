@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../model/User';
@@ -10,7 +10,7 @@ export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-    appURI = 'localhost:4200'
+    appURI = 'http://localhost:4000'
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -18,10 +18,9 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
+        //Hits the authentication interceptor on POST within '/auth' path
         return this.http.post<any>(`${this.appURI}/login/authenticate`, { username, password })
             .pipe(map(user => {
-                console.log(user);
-                console.log(username + " --- " + password)
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -32,4 +31,10 @@ export class AuthenticationService {
                 return user;
             }));
     }
+
+    //Returns empty array of objects if account doesn't exist
+    accountExists(username) {
+        return this.http.get<any>(`${this.appURI}/register/` + username);
+    }
 }
+

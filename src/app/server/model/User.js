@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Define collection and schema for Business
-let User = new Schema({
+let userSchema = new Schema({
     email: {
         type: String
     },
@@ -20,10 +20,13 @@ let User = new Schema({
     },
     phoneNumber: {
         type: Number
+    },
+    accountStatus: {
+        type: String
     }
 
 }, {
         collection: 'users'
     });
 
-module.exports = mongoose.model('User', User);
+module.exports = mongoose.model('userSchema', userSchema);

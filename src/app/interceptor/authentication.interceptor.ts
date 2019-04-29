@@ -2,36 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-import { User } from '../model/User';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const users: User[] = [
-        ];
 
-        const authHeader = request.headers.get('Authorization');
-        const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
-
-        // wrap in delayed observable to simulate server api call
         return of(null).pipe(mergeMap(() => {
-
-            // authenticate - public
             if (request.url.endsWith('/login/authenticate') && request.method === 'POST') {
-                const user = users.find(x => x.username === request.body.username && x.password === request.body.password);
-                if (!user) return error('Username or password is incorrect');
                 return ok({
                     token: `fake-jwt-token`
                 });
             }
-            if (request.url.endsWith('/home') && request.method === 'GET') {
-                if (!isLoggedIn) return unauthorised();
-                return ok(users);
-            }
             return next.handle(request);
         }))
             .pipe(materialize())
-            .pipe(delay(500))
             .pipe(dematerialize());
 
         // private helper functions
@@ -51,7 +35,6 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 }
 
 export let authenticationProvider = {
-    // use fake backend in place of Http service for backend-less development
     provide: HTTP_INTERCEPTORS,
     useClass: AuthenticationInterceptor,
     multi: true

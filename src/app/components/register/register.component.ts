@@ -3,7 +3,7 @@ import { State } from '../../model/State';
 import { RegisterService } from 'src/app/service/register.service';
 import { WORLD_STATES_LIST } from 'src/app/config/constants';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from 'src/app/model/User';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -16,10 +16,12 @@ export class RegisterComponent {
 
   registerFormChild: FormGroup;
 
+  accountExists = false;
   successfullyRegistered = false;
   submitted = false;
 
   constructor(
+    private authenticationService: AuthenticationService,
     private registerService: RegisterService,
     private formBuilder: FormBuilder,
   ) {
@@ -38,6 +40,16 @@ export class RegisterComponent {
   }
 
   addUser(email, password, address, state: State, zipcode, phoneNumber: number): void {
+    if (this.authenticationService.accountExists(email)) {
+      this.accountExists = true;
+
+      //Hide popup after 3sec
+      setTimeout(() => {
+        this.accountExists = false;
+      }, 3000);
+      return;
+    }
+
     this.registerService.addUser(email, password, address, state, zipcode, phoneNumber).subscribe(
       userData => {
         if (userData) {

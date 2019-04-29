@@ -74,3 +74,11 @@
 
   </div>
 </ng-template>
+
+<ng-template [ngIf]="accountExists">
+  <div class="container">
+    <div id="popup" class="alert alert-danger successfullRegister">
+      This username already exists, please choose a different one
+    </div>
+  </div>
+</ng-template>
