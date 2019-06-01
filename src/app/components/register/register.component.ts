@@ -39,17 +39,27 @@ export class RegisterComponent {
     });
   }
 
-  addUser(email, password, address, state: State, zipcode, phoneNumber: number): void {
-    if (this.authenticationService.accountExists(email)) {
-      this.accountExists = true;
+  registerUser(email, password, address, state: State, zipcode, phoneNumber: number) {
+    //Checks if account exists
+    this.authenticationService.accountExists(email)
+      .subscribe(usersArray => {
+        if (usersArray.length > 0) {
+          this.accountExists = true;
+        }
 
-      //Hide popup after 3sec
-      setTimeout(() => {
-        this.accountExists = false;
-      }, 3000);
-      return;
-    }
+        if (this.accountExists == true) {
+          //Hide popup after 3sec
+          setTimeout(() => {
+            this.accountExists = false;
+          }, 3000);
+          return;
+        } else { //Adds new user to db
+          this.addUser(email, password, address, state, zipcode, phoneNumber);
+        }
+      })
+  }
 
+  addUser(email, password, address, state: State, zipcode, phoneNumber: number) {
     this.registerService.addUser(email, password, address, state, zipcode, phoneNumber).subscribe(
       userData => {
         if (userData) {

@@ -52,7 +52,7 @@
       </div>
       <a routerLink="/login"><button class="btn" id="btnLogin">Back</button></a>
       <button class="btn" id="btnRegister"
-        (click)="addUser(registerFormChild.value.email, registerFormChild.value.password, 
+        (click)="registerUser(registerFormChild.value.email, registerFormChild.value.password, 
           registerFormChild.value.address, registerFormChild.value.state, registerFormChild.value.zipcode, registerFormChild.value.phoneNumber)"
         [disabled]="!registerFormChild.valid">Register</button>
     </form>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { User } from 'src/app/model/User';
+import { pipe } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-login',
@@ -27,14 +28,12 @@ export class LoginComponent {
   login(username, password) {
     //Checks if user already exists
     this.authenticationService.accountExists(username).subscribe((data: User[]) => {
+      //If user does not exist
       if (data.length === 0) {
         this.userDoesNotExist = true;
-        //Hide popup after 3sec
-        setTimeout(() => {
-          this.userDoesNotExist = false;
-        }, 3000);
         return;
       } else {
+        //If user exists
         let user: User = data[0];
         if (user.email != username || user.password != password) {
           this.wrongUsernameOrPassword = true;
@@ -43,17 +42,24 @@ export class LoginComponent {
           }, 3000);
         }
       }
-    })
-
-    console.log(this.wrongUsernameOrPassword);
-// SOLVE ASYNC ISSUES (USER PASS BAD AF qwe@a.com)
-    if (!this.wrongUsernameOrPassword) {
-      this.authenticationService.login(username, password).subscribe(response => {
-        if (response.token) {
-          this.router.navigate(['/home']);
+    }, err => console.log(err),
+      () => { //on observable complete
+        if (this.userDoesNotExist) {
+          //Hide popup after 3sec
+          setTimeout(() => {
+            this.userDoesNotExist = false;
+          }, 3000);
+          return;
         }
-      });
-    }
+
+        if (!this.wrongUsernameOrPassword) {
+          this.authenticationService.login(username, password).subscribe(response => {
+            if (response.token) {
+              this.router.navigate(['/home']);
+            }
+          });
+        }
+      })
   }
 
   createForm(): void {
