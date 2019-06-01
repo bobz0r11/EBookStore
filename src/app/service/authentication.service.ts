@@ -17,24 +17,32 @@ export class AuthenticationService {
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    login(username: string, password: string) {
+    login(username: string, password: string): Observable<any> {
         //Hits the authentication interceptor on POST within '/auth' path
         return this.http.post<any>(`${this.appURI}/login/authenticate`, { username, password })
             .pipe(map(user => {
-                // login successful if there's a jwt token in the response
                 if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    // Store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                 }
-
                 return user;
             }));
+    }
+
+    logout() {
+        // Remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+        this.currentUserSubject.next(null);
     }
 
     //Returns empty array of objects if account doesn't exist
     accountExists(username) {
         return this.http.get<any>(`${this.appURI}/register/` + username);
+    }
+
+    public get currentUserValue(): User {
+        return this.currentUserSubject.value;
     }
 }
 

@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { User } from 'src/app/model/User';
-import { pipe } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
@@ -23,6 +22,10 @@ export class LoginComponent {
     private router: Router
   ) {
     this.createForm();
+  }
+
+  ngOnInit(): void {
+    this.authenticationService.logout();
   }
 
   login(username, password) {
@@ -54,7 +57,7 @@ export class LoginComponent {
 
         if (!this.wrongUsernameOrPassword) {
           this.authenticationService.login(username, password).subscribe(response => {
-            if (response.token) {
+            if (response) {
               this.router.navigate(['/home']);
             }
           });

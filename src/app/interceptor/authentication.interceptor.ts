@@ -7,10 +7,13 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 export class AuthenticationInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
+        const authHeader = request.headers.get('Authorization');
+        const isLoggedIn = authHeader && authHeader.startsWith('Bearer fake-jwt-token');
+
         return of(null).pipe(mergeMap(() => {
             if (request.url.endsWith('/login/authenticate') && request.method === 'POST') {
                 return ok({
-                    token: `fake-jwt-token`
+                    token: `token-for-test111111`
                 });
             }
             return next.handle(request);
