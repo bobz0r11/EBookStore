@@ -12,7 +12,6 @@ import { MaterialModule } from './material.module';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authenticationProvider } from './interceptor/authentication.interceptor';
-import { JwtInterceptor } from './interceptor/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -32,8 +31,7 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
     MaterialModule
   ],
   providers: [
-    authenticationProvider,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    authenticationProvider
   ],
   bootstrap: [AppComponent]
 })
