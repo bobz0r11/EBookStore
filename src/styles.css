@@ -1,3 +1,6 @@
+@import "../open-iconic-master/font/css/open-iconic-bootstrap.css";
+@import "../open-iconic-master/font/css/open-iconic.css";
+
 body,
 html {
   height: 100%;
@@ -29,6 +32,16 @@ html {
   z-index: -1;
   background-image: repeating-linear-gradient(145deg, #ccc, #ccc 30px, #000000 30px, #000000 60px);
   min-height: 10px;
+}
+
+.clearfix {
+  overflow: auto;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 html,
