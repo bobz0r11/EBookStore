@@ -12,6 +12,7 @@ import { MaterialModule } from './material.module';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authenticationProvider } from './interceptor/authentication.interceptor';
+import { BooksListComponent } from './components/books-list/books-list.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { authenticationProvider } from './interceptor/authentication.interceptor
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    BooksListComponent
   ],
   imports: [
     BrowserModule,

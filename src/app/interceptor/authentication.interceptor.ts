@@ -17,7 +17,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
             if (request.url.endsWith('/login/authenticate') && request.method === 'POST') {
                 return ok({
-                    token: `AUTH-TOKEN`
+                    token: `AUTH-TOKEN`,
+                    name: request.body.username
                 });
             } else {
                 if (!isLoggedIn) {

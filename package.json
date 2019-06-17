@@ -30,9 +30,13 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "font-awesome": "^4.7.0",
+    "grid-fs": "^1.0.1",
+    "gridfs-stream": "^1.1.1",
     "ip": "^1.1.5",
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.17",
+    "multer": "^1.4.1",
+    "multer-gridfs-storage": "^3.2.3",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "zone.js": "~0.8.26"
