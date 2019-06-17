@@ -2,19 +2,41 @@
   <div class="bodyOverlay">
   </div>
 </div>
-<div id="loginForm">
-  <form class="form-group" [formGroup]="loginForm">
-    <input type="text" class="form-control" placeholder="E-Mail" formControlName="username">
-    <br>
-    <input type="password" class="form-control" placeholder="Password" formControlName="password">
-    <br>
-    <button type="submit" class="btn btn-secondary btn-sm"
-      (click)="login(loginForm.value.username, loginForm.value.password)" [disabled]="loginForm.invalid">Log In</button>
-    <br>
-    <small>Don't have an account?
-      <a routerLink="/register" routerLinkActive="active">Register now</a>
-    </small>
-  </form>
+
+<div class="topbar-container">
+  <div class="topbar">
+    <span>Welcome to <br /> EBook Store</span>
+  </div>
+</div>
+
+  <div id="loginForm">
+    <form class="form-group" [formGroup]="loginForm">
+      <input type="text" class="form-control" placeholder="E-Mail" formControlName="username">
+      <br>
+      <input type="password" class="form-control" placeholder="Password" formControlName="password">
+      <br>
+      <button type="submit" class="btn btn-secondary btn-sm"
+        (click)="login(loginForm.value.username, loginForm.value.password)" [disabled]="loginForm.invalid">Log
+        In</button>
+      <br>
+      <small>Don't have an account?
+        <a routerLink="/register" routerLinkActive="active">Register now</a>
+      </small>
+    </form>
+  </div>
+<div class="loadingBarContainer">
+  <ng-template [ngIf]="loggingIn">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </ng-template>
 </div>
 
 <ng-template [ngIf]="userDoesNotExist">
@@ -24,7 +46,7 @@
 </ng-template>
 
 <ng-template [ngIf]="wrongUsernameOrPassword">
-    <div class="container">
-      <div id="popup" class="alert alert-danger">Username or password are incorrect, please try again</div>
-    </div>
-  </ng-template>
+  <div class="container">
+    <div id="popup" class="alert alert-danger">Username or password are incorrect, please try again</div>
+  </div>
+</ng-template>

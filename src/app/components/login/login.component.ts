@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   userDoesNotExist = false;
   wrongUsernameOrPassword = false;
+  loggingIn = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,7 +59,11 @@ export class LoginComponent implements OnInit {
         if (!this.wrongUsernameOrPassword) {
           this.authenticationService.login(username, password).subscribe(response => {
             if (response) {
-              this.router.navigate(['/home']);
+              this.loggingIn = true;
+              setTimeout(() => {
+                this.router.navigate(['/home']);
+                this.loggingIn = false;
+              }, 1500);
             }
           });
         }

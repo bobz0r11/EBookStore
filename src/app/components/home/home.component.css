@@ -9,13 +9,26 @@
     background-image: linear-gradient(to top, #000000, #2f151a, #592025, #842f29, #ac4324, #af4a1c, #b25112, #b35802, #974c04, #7c3f05, #623305, #4a2703);
 }
 
-.navbar{
-  background-color: transparent;
+.navbar-container{
   width: 100%;
+  text-align: right;
 }
 
-.centered {
-  animation: fadein 1.5s;
+.navbar{
+  display: inline-block;
+}
+
+.navbar>span{
+  margin: 10px;
+  color: white;
+  font-family: 'Alegreya Sans', sans-serif;
+}
+
+.navbar>span:hover{
+  border-bottom-style: groove;
+  border-bottom-width: 2px;
+  border-color: #aaa;
+  cursor: pointer;
 }
 
 @keyframes fadein {
@@ -46,12 +59,10 @@
 }
 
 body {
-    font-family: 'Alegreya Sans', sans-serif;
-}
-
-body {
+  font-family: 'Alegreya Sans', sans-serif;
   margin-bottom: 300px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -95,23 +106,19 @@ footer .form-control {
 }
 
 #searchInput:focus{
-  animation-name: example;
-  animation-duration: 5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  animation-name: floatTop;
+  animation-duration: 1s;
+  animation-play-state: running;
+  animation-fill-mode: forwards;
 }
 
-@keyframes example {
-  0%{
-    margin-top: 100px;
-  }
-
-  50%{
-    margin-top: 200px;
-  }
-
-  100%{
+@keyframes floatTop {
+  from{
     margin-top: 300px;
   }
+
+  to{
+    margin-top: 100px;
+  }
 }
+

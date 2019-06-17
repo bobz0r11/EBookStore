@@ -1,19 +1,26 @@
 <div class="background">
 
-  <nav class="navbar">
-    <a class="navbar-brand"></a>
-    <form class="form-inline">
-      <button id="myAccountBtn" class="btn btn-outline-warning "><span class="oi oi-grid-four-up"></span></button>
-      <button id="logOutBtn" class="btn btn-outline-warning" type="text"><span class="oi oi-account-logout"></span>
-        Logout</button>
-    </form>
-  </nav>
+  <div class="navbar-container">
+    <div class="navbar">
+      <span>Account</span>
+      <span>Settings</span>
+      <span (click)="logOut()">Logout</span>
+      <br/>
+      <br/>
+      <span>{{booksOnHold}} books on hold</span>
+    </div>
+  </div>
 
   <div class="searchBar">
-    <div><input class="form-control mr-sm-2 centered" id="searchInput" type="search" placeholder="Search for a book..."
+    <div>
+      <input class="form-control mr-sm-2" id="searchInput" type="search" placeholder="Search for a book..."
         aria-label="Search">
     </div>
   </div>
+
+
+  
+
 
   <footer class="footer">
     <div class="container">
