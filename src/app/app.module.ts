@@ -12,7 +12,8 @@ import { MaterialModule } from './material.module';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authenticationProvider } from './interceptor/authentication.interceptor';
-import { BooksListComponent } from './components/books-list/books-list.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,7 @@ import { BooksListComponent } from './components/books-list/books-list.component
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    NotFoundComponent,
-    BooksListComponent
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +30,9 @@ import { BooksListComponent } from './components/books-list/books-list.component
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    PdfViewerModule,
+    PdfJsViewerModule
   ],
   providers: [
     authenticationProvider

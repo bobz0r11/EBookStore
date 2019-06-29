@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 export class HomeComponent implements OnInit {
 
   booksOnHold: number = 0;
+ 
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -16,6 +17,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
   }
+
+
+
 
   logOut() {
     this.authenticationService.logout();
