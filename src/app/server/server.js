@@ -4,8 +4,6 @@ const express = require('express'),
   mongoose = require('mongoose'),
   config = require('../config/DB');
 var client = require('mongodb').MongoClient;
-var fs = require('fs');
-var Binary = require('mongodb').Binary;
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -26,47 +24,53 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/getfile", (req, response) => {
+app.get("/getfile/:pdffile", (req, response) => {
+  console.log("CONNECTED OTHER METHOD");
   client.connect(url, (err, client) => {
     if (err) {
       console.log(err);
     } else {
-      let file_path = "C:/Users/bobo9/Desktop/disertatie/kupdf.net_angular2pdf.pdf";
-
-      var data = fs.readFileSync(file_path);
-      var file = {
-        name: file_path.split("/").slice(-1).toLocaleString().replace(".pdf", ""),
-        date: new Date(Date.now()),
-        file_data: "",
-      };
-      file.file_data = Binary(data);
-
+      const fileName = req.url.split("/").slice(-1);
       const db = client.db('EBookStore');
       var collection = db.collection('files');
-      collection.insert(file, function (err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("SUCCESFULLY INSERTED DOCUMENT" + file.name);
-        }
-      })
+      console.log("IM HERE NOW");
 
-      collection.findOne({ name: "kupdf.net_angular2pdf" }).then((file) => {
-        console.log(file);
-        console.log("STARTING WRITING FILE");
-        fs.writeFile('testPDF.pdf', file.file_data.buffer, function (err) {
-          if (err) console.log("ERROR!")
-          console.log('Sucessfully saved!');
-          response.end(new Buffer(file.file_data.buffer, 'binary'));
-        });
+      collection.findOne({ name: { $regex: ".*" + `${fileName}` + '.*' } }).then((pdfDoc) => {
+        response.end(new Buffer(pdfDoc.file_data.buffer, 'binary'))
+        // console.log(pdfDoc);
+        // response.send(pdfDoc);
       });
     }
   })
 });
 
-client.connect(url, (err, client) => {
+app.get("/search/:bookname", (req, res) => {
+  console.log("REQUEST HERE ------------------------- ");
+  const bookname = req.url.split("/").slice(-1);
+  console.log(bookname);
 
-})
+  client.connect(url), (err, client) => {
+    if (err) {
+      console.log("ERROR HERE");
+      console.log(err);
+    }
+
+    console.log("RECEIVED REQUEST HERE /SEARCH/BOOKNAME");
+    const db = client.db('EBookStore');
+    var collection = db.collection('files');
+
+    collection.findOne({ name: `${bookname}` }).then((pdfDoc) => {
+      console.log(pdfDoc);
+      res.send("IM OK");
+    });
+
+    console.log("connected to mongo here")
+
+    console.log("FILENAME INSIDE /search NODE ROUTE");
+
+    // res.end(new Buffer1);
+  }
+});
 
 app.use(bodyParser.json());
 app.use(cors());

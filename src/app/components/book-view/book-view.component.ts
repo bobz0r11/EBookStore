@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,16 +10,19 @@ import { Observable } from 'rxjs';
 })
 export class BookViewComponent implements OnInit {
 
+  filename: any = 'Effective-Java-2nd-Edition';
+
   ngOnInit(): void {
-    this.openPdf();
+    this.openPdf(this.filename);
   }
 
   appURI = "http://localhost:4000/getfile";
   file: any;
   booksOnHold = 0;
-  pageNum = 38;
+  pageNum = 1;
   totalPagesNumber;
   endOfFile = false;
+  startOfFile = true;
 
   constructor(
     private http: HttpClient,
@@ -28,16 +30,16 @@ export class BookViewComponent implements OnInit {
 
   @ViewChild('pdfViewer') pdfViewer;
 
-  private downloadPDF(): Observable<any> {
-    return this.http.get(`${this.appURI}`, { responseType: 'arraybuffer' }).pipe(map(
-      (res) => {
+  private getPdf(name): Observable<any> {
+    return this.http.get(`${this.appURI}/` + name, { responseType: 'arraybuffer' })
+      .pipe(map((res) => {
         return new Blob([res], { type: "application/pdf" });
       }));
   }
 
-  public openPdf() {
+  public openPdf(fileName) {
     console.log("----------------");
-    this.downloadPDF().subscribe(data => {
+    this.getPdf(fileName).subscribe(data => {
       var fileURL = URL.createObjectURL(data);
       this.file = fileURL;
       window.open(fileURL);
@@ -46,14 +48,21 @@ export class BookViewComponent implements OnInit {
   }
 
   increment() {
-    if(this.pageNum === this.totalPagesNumber){
+    if (this.pageNum === this.totalPagesNumber) {
       this.endOfFile = true;
+      this.startOfFile = false;
       return;
     }
+    this.startOfFile = false;
     this.pageNum++;
   }
 
   decrement() {
+    console.log(this.pageNum);
+    if (this.pageNum === 1) {
+      this.startOfFile = true;
+      return;
+    }
     this.pageNum--;
     this.endOfFile = false;
   }

@@ -12,15 +12,17 @@
   </div>
 
   <div class="searchBar">
-    <div>
-      <input class="form-control mr-sm-2" id="searchInput" type="search" placeholder="Search for a book..."
-        aria-label="Search">
-    </div>
+    <mat-form-field>
+      <input [formControl]="autoCompleteControl" type="text" aria-label="Number" matInput id="searchInput"
+        class="form-control mr-sm-2" placeholder="Search for a book..." [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        <mat-option *ngFor="let item of searchBarAutoComplete$ | async; let index = index" [value]="item.name">
+          {{ item.name | titlecase}}
+          fwefwefwef
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </div>
-
-
-
-
 
 
   <footer class="footer">

@@ -15,6 +15,7 @@ import { authenticationProvider } from './interceptor/authentication.interceptor
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { BookViewComponent } from './components/book-view/book-view.component';
+import { MatAutocompleteModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BookViewComponent } from './components/book-view/book-view.component';
     ReactiveFormsModule,
     MaterialModule,
     PdfViewerModule,
-    PdfJsViewerModule
+    PdfJsViewerModule,
+    MatAutocompleteModule
   ],
   providers: [
     authenticationProvider
