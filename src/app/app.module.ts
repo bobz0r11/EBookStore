@@ -14,6 +14,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { authenticationProvider } from './interceptor/authentication.interceptor';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { BookViewComponent } from './components/book-view/book-view.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    BookViewComponent
   ],
   imports: [
     BrowserModule,

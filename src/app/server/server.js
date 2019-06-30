@@ -20,22 +20,22 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
   err => { console.log('Can not connect to the database' + err) }
 );
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
 
 app.get("/getfile", (req, response) => {
   client.connect(url, (err, client) => {
     if (err) {
       console.log(err);
     } else {
-      let file_path = "C:/Users/bobo9/Desktop/CV - Bogdan Alexandru.pdf"
+      let file_path = "C:/Users/bobo9/Desktop/disertatie/kupdf.net_angular2pdf.pdf";
+
       var data = fs.readFileSync(file_path);
       var file = {
-        name: "book1",
+        name: file_path.split("/").slice(-1).toLocaleString().replace(".pdf", ""),
         date: new Date(Date.now()),
         file_data: "",
       };
@@ -43,22 +43,18 @@ app.get("/getfile", (req, response) => {
 
       const db = client.db('EBookStore');
       var collection = db.collection('files');
-      // collection.insert(file, function (err, result) {
-      //   if (err) {
-      //     console.log(err);
-      //   } else {
-      //     console.log("SUCCESFULLY INSERTED DOCUMENT" + file.name);
-      //   }
-      // })
+      collection.insert(file, function (err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("SUCCESFULLY INSERTED DOCUMENT" + file.name);
+        }
+      })
 
-      // collection.findOne({ name: "book1" }).then(result => {
-      //   console.log(result);
-      // })
-
-      collection.findOne({ name: "book1" }).then((file) => {
+      collection.findOne({ name: "kupdf.net_angular2pdf" }).then((file) => {
         console.log(file);
         console.log("STARTING WRITING FILE");
-        fs.writeFile('CV - Bogdan Alexandru.pdf', file.file_data.buffer, function (err) {
+        fs.writeFile('testPDF.pdf', file.file_data.buffer, function (err) {
           if (err) console.log("ERROR!")
           console.log('Sucessfully saved!');
           response.end(new Buffer(file.file_data.buffer, 'binary'));

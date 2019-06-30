@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './guard/auth.guard';
+import { BookViewComponent } from './components/book-view/book-view.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,10 @@ export const routes: Routes = [
   {
     path: "login",
     component: LoginComponent
+  },
+  {
+    path: "bookView",
+    component: BookViewComponent
   },
   {
     path: '404',

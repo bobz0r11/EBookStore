@@ -1,0 +1,21 @@
+<div class="background">
+
+  <div class="navbar-container">
+    <div class="navbar">
+      <span>Account</span>
+      <span>Settings</span>
+      <span (click)="logOut()">Logout</span>
+      <br />
+      <br />
+      <span>{{booksOnHold}} books on hold</span>
+    </div>
+    <div class="book-container">
+      <button id="previousBtn" class="btn" (click)="decrement()"><span><i class="fa fa-arrow-left"></i> Previous page
+        </span> </button> <button id="nextBtn" class="btn" (click)="increment()"
+        [style.background-color]="endOfFile? 'gray' : 'steelblue'" [style.disabled]="endOfFile? 'true' : 'false'"> Next
+        Page <i class="fa fa-arrow-right"></i></button>
+      <pdf-viewer [(src)]=" file" [show-all]="false" [(page)]="pageNum" [fit-to-page]="true" [autoresize]="true"
+        (after-load-complete)="getTotalPagesNumber($event)">
+      </pdf-viewer>
+    </div>
+  </div>
