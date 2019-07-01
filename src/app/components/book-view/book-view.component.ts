@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { MongoService } from 'src/app/service/mongo.service';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-view',
@@ -10,12 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class BookViewComponent implements OnInit {
 
-  filename: any = 'Effective-Java-2nd-Edition';
-
-  ngOnInit(): void {
-    this.openPdf(this.filename);
-  }
-
+  filename: any;
   appURI = "http://localhost:4000/getfile";
   file: any;
   booksOnHold = 0;
@@ -24,27 +19,25 @@ export class BookViewComponent implements OnInit {
   endOfFile = false;
   startOfFile = true;
 
-  constructor(
-    private http: HttpClient,
-  ) { }
-
   @ViewChild('pdfViewer') pdfViewer;
 
-  private getPdf(name): Observable<any> {
-    return this.http.get(`${this.appURI}/` + name, { responseType: 'arraybuffer' })
-      .pipe(map((res) => {
-        return new Blob([res], { type: "application/pdf" });
-      }));
+  constructor(
+    private mongoService: MongoService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.filename = this.router.url.split("/").slice(-1);
+    this.openPdf(this.filename);
+
   }
 
   public openPdf(fileName) {
-    console.log("----------------");
-    this.getPdf(fileName).subscribe(data => {
+    this.mongoService.getPdf(fileName).subscribe(data => {
       var fileURL = URL.createObjectURL(data);
       this.file = fileURL;
       window.open(fileURL);
     });
-    console.log("----------------");
   }
 
   increment() {
@@ -58,7 +51,6 @@ export class BookViewComponent implements OnInit {
   }
 
   decrement() {
-    console.log(this.pageNum);
     if (this.pageNum === 1) {
       this.startOfFile = true;
       return;

@@ -1,8 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   template: `

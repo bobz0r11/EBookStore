@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MongoService {
 
-    appURI = "http://localhost:4000/getfile/";
+    booksURI = "http://localhost:4000/books/";
+    getFileURI = "http://localhost:4000/getfile/";
 
     constructor(private http: HttpClient) { }
 
     search(query: string): Observable<any> {
-        console.log(`${this.appURI}` + query);
-        this.http.get(`${this.appURI}` + query).subscribe(data => {
-            console.log(data);
-        });
-        return this.http.get(`${this.appURI}` + query);
+        return this.http.get(`${this.booksURI}` + query);
     }
 
+    getPdf(name): Observable<any> {
+        return this.http.get(`${this.getFileURI}` + name, { responseType: 'arraybuffer' })
+            .pipe(map((res) => {
+                return new Blob([res], { type: "application/pdf" });
+            }));
+    }
 }

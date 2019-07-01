@@ -22,7 +22,7 @@ export const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: "bookView",
+    path: "bookView/:name",
     component: BookViewComponent
   },
   {

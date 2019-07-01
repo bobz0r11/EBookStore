@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Alegreya+Sans:300);
+@import url("https://fonts.googleapis.com/css?family=Lilita+One|Quicksand|Source+Code+Pro");
 
 
 .background{
@@ -6,7 +7,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: linear-gradient(to top, #000000, #2f151a, #592025, #842f29, #ac4324, #af4a1c, #b25112, #b35802, #974c04, #7c3f05, #623305, #4a2703);
+    background-image: linear-gradient(to right, #838587, #607e88, #32797a, #0c7159, #24662a);
 }
 
 .navbar-container{
@@ -106,3 +107,24 @@ footer .form-control {
   }
 }
 
+.container-book {
+  animation: fadein 0.5s ease-out;
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.bookInfo >div{
+  font-family: "Lilita One", cursive;
+  color: white;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    transform: translateY(400px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

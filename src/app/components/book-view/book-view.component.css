@@ -4,7 +4,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: linear-gradient(to top, #000000, #2f151a, #592025, #842f29, #ac4324, #af4a1c, #b25112, #b35802, #974c04, #7c3f05, #623305, #4a2703);
+    background-image: linear-gradient(to right, #838587, #607e88, #32797a, #0c7159, #24662a);
 }
 
 .navbar-container{
@@ -61,8 +61,21 @@
     display: inline;
     margin-left: 5px;
     width: 10%;
+    font-family: "Lilita One", cursive;
+    border-style: outset;
+    background-color: steelblue;
+    color: black;
   }
 
   button:hover{
       opacity: .9;
+  }
+
+  a:link{
+    text-decoration: none;
+  }
+
+  #backBtn > a{
+    color: black;
+    font-family: "Lilita One", cursive;
   }

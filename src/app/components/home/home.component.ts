@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { Book } from '../../model/Book';
 import { map, catchError, startWith, debounceTime, switchMap } from 'rxjs/operators';
 import { MongoService } from 'src/app/service/mongo.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,14 +14,21 @@ import { MongoService } from 'src/app/service/mongo.service';
 })
 export class HomeComponent implements OnInit {
 
-
+  file: any;
   booksOnHold: number = 0;
+  bookName: string;
   public searchBarAutoComplete$: Observable<Book> = null;
   public autoCompleteControl = new FormControl();
+  isRendered = false;
+  rating: number;
+  stars: Array<number> = new Array<number>();
+
+  @ViewChild('pdfViewer') pdfViewer;
 
   constructor(
     private authenticationService: AuthenticationService,
-    private mongoService: MongoService
+    private mongoService: MongoService,
+    private router: Router
   ) { }
 
   logOut() {
@@ -29,30 +37,48 @@ export class HomeComponent implements OnInit {
 
   lookup(value: string): Observable<any> {
     return this.mongoService.search(value).pipe(
-      // map the item property of the github results as our return object
-      map(results => {
-        console.log(results + " <----------- RESULTS")
-        results.items;
+      map(book => {
+        if (book) {
+          this.bookName = book.name;
+          this.mongoService.getPdf(this.bookName).subscribe(data => {
+            var fileURL = URL.createObjectURL(data);
+            this.file = fileURL;
+            window.open(fileURL);
+            this.isRendered = true;
+            this.rating = this.generateRating(5);
+            this.populateStarsArray(this.rating);
+          })
+        }
       }),
-      // catch errors
       catchError(_ => {
         return of(null);
       })
     );
   }
 
+  populateStarsArray(rating: number) {
+    this.stars = [];
+    for (let i = 0; i < rating; i++) {
+      this.stars.push(0);
+    }
+  }
+
+  generateRating(maxValue: number): number {
+    return Math.floor(Math.random() * Math.floor(maxValue));
+  }
+
+  goToBook() {
+    this.router.navigate(['/bookView', `${this.bookName}`]);
+  }
+
   ngOnInit(): void {
     this.searchBarAutoComplete$ = this.autoCompleteControl.valueChanges.pipe(
       startWith(''),
-      // delay emits
       debounceTime(1000),
-      // use switch map so as to cancel previous subscribed events, before creating new once
       switchMap(value => {
         if (value !== '') {
-          // lookup from github
           return this.lookup(value);
         } else {
-          // if no value is pressent, return null
           return of(null);
         }
       })

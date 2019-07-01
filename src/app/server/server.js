@@ -12,10 +12,21 @@ var ip = require('ip');
 const userRoutes = require('./routes/user.routes');
 let url = "mongodb://localhost:27017";
 
+let db;
+let collection;
+
 mongoose.Promise = global.Promise;
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
+  () => { console.log("Connected MONGOOSE succesfullly") },
+  err => { console.log("Can not connect mongoose to the database " + err) }
+);
+
+client.connect(config.DB, { useNewUrlParser: true, poolSize: 10 }).then(client => {
+  db = client.db("EBookStore");
+  collection = db.collection('files');
+},
   () => { console.log('Database is connected successfully') },
-  err => { console.log('Can not connect to the database' + err) }
+  err => { console.log('Can not connect to the database ' + err) }
 );
 
 app.use(function (req, res, next) {
@@ -25,7 +36,6 @@ app.use(function (req, res, next) {
 });
 
 app.get("/getfile/:pdffile", (req, response) => {
-  console.log("CONNECTED OTHER METHOD");
   client.connect(url, (err, client) => {
     if (err) {
       console.log(err);
@@ -33,10 +43,9 @@ app.get("/getfile/:pdffile", (req, response) => {
       const fileName = req.url.split("/").slice(-1);
       const db = client.db('EBookStore');
       var collection = db.collection('files');
-      console.log("IM HERE NOW");
 
       collection.findOne({ name: { $regex: ".*" + `${fileName}` + '.*' } }).then((pdfDoc) => {
-        response.end(new Buffer(pdfDoc.file_data.buffer, 'binary'))
+        response.end(new Buffer(pdfDoc.file_data.buffer, 'binary'));
         // console.log(pdfDoc);
         // response.send(pdfDoc);
       });
@@ -44,32 +53,13 @@ app.get("/getfile/:pdffile", (req, response) => {
   })
 });
 
-app.get("/search/:bookname", (req, res) => {
-  console.log("REQUEST HERE ------------------------- ");
+app.get("/books/:name", (req, response) => {
   const bookname = req.url.split("/").slice(-1);
-  console.log(bookname);
-
-  client.connect(url), (err, client) => {
-    if (err) {
-      console.log("ERROR HERE");
-      console.log(err);
+  collection.findOne({ name: { $regex: ".*" + `${bookname}` + '.*' } }).then((pdfDoc) => {
+    if (pdfDoc) {
+      response.send(pdfDoc);
     }
-
-    console.log("RECEIVED REQUEST HERE /SEARCH/BOOKNAME");
-    const db = client.db('EBookStore');
-    var collection = db.collection('files');
-
-    collection.findOne({ name: `${bookname}` }).then((pdfDoc) => {
-      console.log(pdfDoc);
-      res.send("IM OK");
-    });
-
-    console.log("connected to mongo here")
-
-    console.log("FILENAME INSIDE /search NODE ROUTE");
-
-    // res.end(new Buffer1);
-  }
+  });
 });
 
 app.use(bodyParser.json());

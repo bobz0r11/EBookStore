@@ -16,6 +16,9 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { BookViewComponent } from './components/book-view/book-view.component';
 import { MatAutocompleteModule } from '@angular/material';
+import { MongoService } from './service/mongo.service';
+import { AuthenticationService } from './service/authentication.service';
+import { RegisterService } from './service/register.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { MatAutocompleteModule } from '@angular/material';
     MatAutocompleteModule
   ],
   providers: [
-    authenticationProvider
+    authenticationProvider,
+    MongoService,
+    AuthenticationService,
+    RegisterService
   ],
   bootstrap: [AppComponent]
 })

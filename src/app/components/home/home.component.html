@@ -13,8 +13,8 @@
 
   <div class="searchBar">
     <mat-form-field>
-      <input [formControl]="autoCompleteControl" type="text" aria-label="Number" matInput id="searchInput"
-        class="form-control mr-sm-2" placeholder="Search for a book..." [matAutocomplete]="auto">
+      <input [formControl]="autoCompleteControl" type="text" matInput id="searchInput" class="form-control "
+        [matAutocomplete]="auto" placeholder="Search for a book...">
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
         <mat-option *ngFor="let item of searchBarAutoComplete$ | async; let index = index" [value]="item.name">
           {{ item.name | titlecase}}
@@ -23,6 +23,18 @@
       </mat-autocomplete>
     </mat-form-field>
   </div>
+
+  <ng-template [ngIf]="isRendered">
+    <div class="container-book">
+      <pdf-viewer style="display: inline-block; cursor: pointer;" [(src)]="file" [page]="1" [zoom]="0.4" [show-all]="false"
+        [autoresize]="false" (click)="goToBook()"></pdf-viewer>
+      <div class="bookInfo">
+        <div>{{bookName}}</div>
+        <div>This book has a rating of {{rating}}/5 stars</div>
+        <span style="color: gold" *ngFor="let star of stars"><i class="fa fa-star"></i></span>
+      </div>
+    </div>
+  </ng-template>
 
 
   <footer class="footer">
